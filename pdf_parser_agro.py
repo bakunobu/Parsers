@@ -13,8 +13,22 @@ import PyPDF2
 thanks to medium.com/@umerfarooq_26378/python-for-pdf-ef0fac2808b0
 '''
 
-pdf_file_obj = open(FILE, 'rb')
+def show_num_pages(FILE):
+    """
+    Return the number of pages
+    
+    Args:
+    =====
+    FILE: str
+    a filename or a path to a file
+    
+    Returns:
+    ========
+    
+    
+    """
+    pdf_file_obj = open(FILE, 'rb')
+    pdf_reader = PyPDF2.PdfFileReader(pdf_file_obj)
+    return(type(pdf_reader.numPages))
 
-pdf_reader = PyPDF2.PdfFileReader(pdf_file_obj)
-
-print(pdf_reader.numPages)
+print(show_num_pages(FILE))
