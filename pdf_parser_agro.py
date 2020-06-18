@@ -75,7 +75,9 @@ def page_index(* args):
     else:
         return(f'{args[0]}-{args[1]}')
 
-print(page_index(1, 3))
+
+# testing
+# print(page_index(1, 3))
 
 def pdf_to_csv_conv(params_dict):
     
@@ -124,3 +126,8 @@ def pdf_to_csv_conv(params_dict):
     
     tabula.convert_into(PDF_FILE, 'temp.csv', pages=ppages,
                         stream=True, output_format='csv')
+    
+    with open('temp;csv', 'r') as f:
+        for line in f:
+            
+        
