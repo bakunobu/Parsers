@@ -69,6 +69,14 @@ columns = ['indicator',
            'non_profit_2016']
 
 
+def page_index(* args):
+    if len(args) == 1:
+        return(args[0])
+    else:
+        return(f'{args[0]}-{args[1]}')
+
+print(page_index(1, 3))
+
 def pdf_to_csv_conv(params_dict):
     
     '''
@@ -114,7 +122,5 @@ def pdf_to_csv_conv(params_dict):
     df = pd.DataFrame(columns=COLUMNS)
 
 
-tabula.convert_into(FILE, 'test.csv', pages='12-21', 
-                     stream=True, output_format='csv')
-
-with open
+#tabula.convert_into(FILE, 'test.csv', pages='12-21', 
+#                     stream=True, output_format='csv')
