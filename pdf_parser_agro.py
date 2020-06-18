@@ -120,7 +120,7 @@ def pdf_to_csv_conv(params_dict):
     
     
     df = pd.DataFrame(columns=COLUMNS)
-
-
-#tabula.convert_into(FILE, 'test.csv', pages='12-21', 
-#                     stream=True, output_format='csv')
+    ppages = page_index(start_page, end_page)
+    
+    tabula.convert_into(PDF_FILE, 'temp.csv', pages=ppages,
+                        stream=True, output_format='csv')
