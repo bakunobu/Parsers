@@ -18,7 +18,7 @@ with open('test.csv', 'r') as f:
             
             while ',' in line:
                 line.remove(',')
-            preprocessed = [line[0]]
+            preprocessed = [line[0].replace(',', '')]
             
             for el in line[1:]:
                 el = el.replace(',', '.')
@@ -37,7 +37,9 @@ with open('test.csv', 'r') as f:
                         
                         else:
                             preprocessed.append(np.NaN)
+
             print(preprocessed)
+            
         elif '"' in line:
             line = line.split('"')
             if '\n' in line:
@@ -45,7 +47,7 @@ with open('test.csv', 'r') as f:
             
             while ',' in line:
                 line.remove(',')
-            preprocessed = [line[0]]
+            preprocessed = [line[0].replace(',', '')]
             
             for el in line[1:]:
                 el = el.replace(',', '.')
@@ -64,12 +66,13 @@ with open('test.csv', 'r') as f:
                         
                         else:
                             preprocessed.append(np.NaN)
+
             print(preprocessed)
         else:
             line = line.split('"')
             if '\n' in line:
                 line.remove('\n')
-            preprocessed = [line[0]]
+            preprocessed = [line[0].replace(',', '')]
             for el in line[1:]:
                 el = el.split()
                 
@@ -87,7 +90,6 @@ with open('test.csv', 'r') as f:
                         else:
                             preprocessed.append(np.NaN)
             
-        
             print(preprocessed)
                 
             
