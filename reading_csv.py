@@ -3,31 +3,92 @@ import numpy as np
 
 with open('test.csv', 'r') as f:
     lines = [line for line in f]
-    for line in lines[:10]:
+    for line in lines[:50]:
+        
         if line[:2] == '""':
             print('skipping')
+        
+        elif ',,,' in line:
+            print('too many commas')
+        
         elif line[0] == '"':
             line = line[1:].split('"')
-            line.remove('\n')
+            if '\n' in line:
+                line.remove('\n')
+            
             while ',' in line:
                 line.remove(',')
             preprocessed = [line[0]]
+            
             for el in line[1:]:
                 el = el.replace(',', '.')
                 el = el.split()
+                
                 for x in el:
-                    print(type(x))
-                    x.replace(',', '.')
-                    print(x)
+                    
                     try:
                         i = float(x)
                         preprocessed.append(i)
+                    
                     except:
+                        
                         if x == ',,':
                             pass
+                        
                         else:
                             preprocessed.append(np.NaN)
-    print(preprocessed)
+            print(preprocessed)
+        elif '"' in line:
+            line = line.split('"')
+            if '\n' in line:
+                line.remove('\n')
+            
+            while ',' in line:
+                line.remove(',')
+            preprocessed = [line[0]]
+            
+            for el in line[1:]:
+                el = el.replace(',', '.')
+                el = el.split()
+                
+                for x in el:
+                    
+                    try:
+                        i = float(x)
+                        preprocessed.append(i)
+                    
+                    except:
+                        
+                        if x == ',,':
+                            pass
+                        
+                        else:
+                            preprocessed.append(np.NaN)
+            print(preprocessed)
+        else:
+            line = line.split('"')
+            if '\n' in line:
+                line.remove('\n')
+            preprocessed = [line[0]]
+            for el in line[1:]:
+                el = el.split()
+                
+                for x in el:
+                    
+                    try:
+                        i = float(x)
+                        preprocessed.append(i)
+                    
+                    except:
+                        
+                        if x == ',,':
+                            pass
+                        
+                        else:
+                            preprocessed.append(np.NaN)
+            
+        
+            print(preprocessed)
                 
             
 
