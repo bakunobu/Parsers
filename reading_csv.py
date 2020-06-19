@@ -1,8 +1,12 @@
 import numpy as np
 
 
-def read_raw_data(my_file):
-    pass
+def simple_split(line):
+    
+    line = line.replace(',', ' ')
+    if '\n' in line:
+        line.remove('\n')
+    return(line.split(' '))
 
 
 def pair_to_int(pair, my_list):
@@ -18,7 +22,54 @@ def pair_to_int(pair, my_list):
                 my_list.append(np.NaN)
 
 
+def create_and_clean(line, delim):
+    
+    line = line.split(delim)
+    if '\n' in line:
+        line.remove('\n')
+    while ',' in line:
+        line.remove(',')
+    return(line)
 
+def read_raw_data(my_file):
+    
+    lines = [line for line in f]
+    prep_data = []
+    
+    for line in lines:
+        if line[:2] == '""':
+            print('skipping')
+        
+        elif ',,,' in line:
+            print('too many commas')
+        
+        elif line[0] == '"':
+            line = create_and_clean(line[1:], '"')
+            preprocessed = [line[0].replace(',', '')]
+        
+            for pair in lines[1:]:
+                pair_to_int(pair, preprocessed)
+                prep_data.append(preprocessed)
+        
+        elif '"' in line:
+            line = create_and_clean(line, '"')
+            preprocessed = [line[0].replace(',', '')]
+        
+            for pair in lines[1:]:
+                pair_to_int(pair, preprocessed)
+                prep_data.append(preprocessed)
+        else:
+            line = simple_split(line)
+            preprocessed = [line[0].replace(',', '')]
+        
+            for pair in lines[1:]:
+                pair_to_int(pair, preprocessed)
+                prep_data.append(preprocessed)
+                
+    
+    return(prep_data)
+
+"""
 with open('test.csv', 'r') as f:
     lines = [line for line in f]
     for line in lines[:50]:
@@ -111,7 +162,7 @@ with open('test.csv', 'r') as f:
             print(preprocessed)
                 
             
-
+"""
 
 '''
 with open('test.csv', 'r') as f:
