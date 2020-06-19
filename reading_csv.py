@@ -1,6 +1,24 @@
 import numpy as np
 
 
+def read_raw_data(my_file):
+    pass
+
+
+def pair_to_int(pair, my_list):
+    
+    for x in pair:
+        try:
+            i = float(x)
+            my_list.append(i)
+        except:
+            if x == ',,':
+                pass
+            else:
+                my_list.append(np.NaN)
+
+
+
 with open('test.csv', 'r') as f:
     lines = [line for line in f]
     for line in lines[:50]:
