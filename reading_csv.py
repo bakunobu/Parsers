@@ -5,7 +5,7 @@ def simple_split(line):
     
     line = line.replace(',', ' ')
     if '\n' in line:
-        line.remove('\n')
+        line.replace('\n', '')
     return(line.split(' '))
 
 
@@ -31,43 +31,52 @@ def create_and_clean(line, delim):
         line.remove(',')
     return(line)
 
+
 def read_raw_data(my_file):
+    with open(my_file, 'r') as f:
+        lines = [line for line in f]
+        prep_data = []
     
-    lines = [line for line in f]
-    prep_data = []
-    
-    for line in lines:
-        if line[:2] == '""':
-            print('skipping')
+        for line in lines:
+            if line[:2] == '""':
+                print('skipping')
         
-        elif ',,,' in line:
-            print('too many commas')
+            elif ',,,' in line:
+                print('too many commas')
         
-        elif line[0] == '"':
-            line = create_and_clean(line[1:], '"')
-            preprocessed = [line[0].replace(',', '')]
+            elif line[0] == '"':
+                line = create_and_clean(line[1:], '"')
+                preprocessed = [line[0].replace(',', ''),]
         
-            for pair in lines[1:]:
-                pair_to_int(pair, preprocessed)
-                prep_data.append(preprocessed)
+                for pair in lines[1:]:
+                    pair_to_int(pair, preprocessed)
+                print(preprocessed)
+                # prep_data.append(tuple(preprocessed))
         
-        elif '"' in line:
-            line = create_and_clean(line, '"')
-            preprocessed = [line[0].replace(',', '')]
+            elif '"' in line:
+                line = create_and_clean(line, '"')
+                preprocessed = [line[0].replace(',', ''),]
         
-            for pair in lines[1:]:
-                pair_to_int(pair, preprocessed)
-                prep_data.append(preprocessed)
-        else:
-            line = simple_split(line)
-            preprocessed = [line[0].replace(',', '')]
+                for pair in lines[1:]:
+                    pair_to_int(pair, preprocessed)
+                print(preprocessed)
+                # prep_data.append(tuple(preprocessed))
+
+            else:
+                line = simple_split(line)
+                preprocessed = [line[0].replace(',', ''),]
         
-            for pair in lines[1:]:
-                pair_to_int(pair, preprocessed)
-                prep_data.append(preprocessed)
+                for pair in lines[1:]:
+                    pair_to_int(pair, preprocessed)
+                print(preprocessed)
+                # prep_data.append(tuple(preprocessed))
                 
     
-    return(prep_data)
+#        return(prep_data)
+
+
+read_raw_data('test.csv')
+
 
 """
 with open('test.csv', 'r') as f:
