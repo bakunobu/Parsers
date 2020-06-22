@@ -41,7 +41,7 @@ def string_parser(test_string):
         test_string = test_string.split('"')
         preprocessed = [test_string[0]]
         test_string = [x for x in test_string if len(x) > 1]
-        print(test_string)
+
         for el in test_string[1:-1]:
             if el == ',':
                 test_string.remove(',')
@@ -68,7 +68,7 @@ def string_parser(test_string):
             test_string = test_string.replace(',х х,,', '",х х,,"')
         test_string = test_string.split(',')
         test_string = [x for x in test_string if len(x) > 1]
-        print(test_string)
+
         preprocessed = [test_string[0]]
         for el in test_string[1:-1]:
             el =el.split(' ')
