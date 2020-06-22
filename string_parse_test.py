@@ -1,12 +1,15 @@
 import numpy as np
 
 
-test_string = 'категории организаций (хозяйств),х х,,"68,6 76,3","51,7 66,1","49,9 65,9","66,5 66,9","88,7 79,8","92,7 89,0"'
+test_string = 'птица,х х,160963 322229,156 975,118 952 597 1075,22 26,118 40'
 
 def string_parser(test_string):
     preprocessed = []
     if test_string[:2] == '""':
         print('PASS!')
+    
+    elif ',,,' in test_string:
+        print('too many commas')
     
     elif test_string[:1] == '"':
         test_string = test_string[1:].split('"')
@@ -59,6 +62,28 @@ def string_parser(test_string):
                         preprocessed.append(x)
                     else:
                         pass
+    
+    else:
+        if ',х х,,' in test_string:
+            test_string = test_string.replace(',х х,,', '",х х,,"')
+        test_string = test_string.split(',')
+        test_string = [x for x in test_string if len(x) > 1]
+        print(test_string)
+        preprocessed = [test_string[0]]
+        for el in test_string[1:-1]:
+            el =el.split(' ')
+            for x in el:
+                    # print(el)
+                try:
+                    x = float(x)
+                    preprocessed.append(x)
+                except:
+                    if el != '.' or el != '':
+                        x = np.NaN
+                        preprocessed.append(x)
+                    else:
+                        pass
+    
     
     print(preprocessed)
 
