@@ -87,4 +87,7 @@ def string_parser(test_string):
     
     print(preprocessed)
 
-string_parser(test_string)
+with open('test.csv') as f:
+    lines = [line for line in f]
+    for line in lines:
+        string_parser(line)
