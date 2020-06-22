@@ -1,7 +1,6 @@
 import numpy as np
+import csv
 
-
-test_string = 'птица,х х,160963 322229,156 975,118 952 597 1075,22 26,118 40'
 
 def string_parser(test_string):
     preprocessed = []
@@ -39,7 +38,7 @@ def string_parser(test_string):
         if ',х х,,' in test_string:
             test_string = test_string.replace(',х х,,', '",х х,,"')
         test_string = test_string.split('"')
-        preprocessed = [test_string[0]]
+        preprocessed = [test_string[0][:-1]]
         test_string = [x for x in test_string if len(x) > 1]
 
         for el in test_string[1:-1]:
@@ -69,7 +68,7 @@ def string_parser(test_string):
         test_string = test_string.split(',')
         test_string = [x for x in test_string if len(x) > 1]
 
-        preprocessed = [test_string[0]]
+        preprocessed = [test_string[0][:-1]]
         for el in test_string[1:-1]:
             el =el.split(' ')
             for x in el:
@@ -84,10 +83,20 @@ def string_parser(test_string):
                     else:
                         pass
     
-    
-    print(preprocessed)
+    return(preprocessed)
+
+
+results = []
 
 with open('test.csv') as f:
     lines = [line for line in f]
     for line in lines:
-        string_parser(line)
+        row = string_parser(line)
+        if row:
+            results.append(row)
+
+
+with open('main_results.csv', 'a+') as csvfile:
+    rowwriter = csv.writer(csvfile, delimiter=',')
+    for result in results:
+        rowwriter.writerow(result)
