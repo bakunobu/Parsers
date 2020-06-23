@@ -95,6 +95,26 @@ with open('test.csv') as f:
         if row:
             results.append(row)
 
+columns = ['indicator',
+           'all_2006',
+           'all_2016',
+           'companies_2006',
+           'companies_2016',
+           'farmers_and_IE_2006',
+           'farmers_and_IE_2016', 
+           'farmers_2006',
+           'farmers_2016',
+           'IE_2006',
+           'IE_2016',
+           'personal_2006',
+           'personal_2016',
+           'non_profit_2006',
+           'non_profit_2016']
+
+
+with open('main_results.csv', 'a+') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames = columns)
+    writer.writeheader()
 
 with open('main_results.csv', 'a+') as csvfile:
     rowwriter = csv.writer(csvfile, delimiter=',')
