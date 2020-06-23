@@ -114,7 +114,7 @@ columns = ['indicator',
 
 with open('main_results.csv', 'a+') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames = columns)
-    writer.writeheader()
+    writer.st.pywriteheader()
 
 with open('main_results.csv', 'a+') as csvfile:
     rowwriter = csv.writer(csvfile, delimiter=',')
