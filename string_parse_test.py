@@ -14,6 +14,22 @@ def write_data(PATH, DATA, headers = []):
             rowwriter.writerow(result)
 
 
+def parse_pair(el):
+    pairs = []
+    el = el.split(' ')
+    for x in el:
+        try:
+            x = float(x)
+            pairs.append(x)
+        except:
+            if el != '.' or el != '':
+                x = np.NaN
+                pairs.append(x)
+            else:
+                pass
+    return(pairs)
+
+
 def string_parser(test_string):
     preprocessed = []
     if test_string[:2] == '""':
@@ -82,7 +98,7 @@ def string_parser(test_string):
 
         preprocessed = [test_string[0][:-1]]
         for el in test_string[1:-1]:
-            el =el.split(' ')
+            el = el.split(' ')
             for x in el:
                     # print(el)
                 try:
