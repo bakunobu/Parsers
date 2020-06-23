@@ -2,6 +2,18 @@ import numpy as np
 import csv
 
 
+def write_data(PATH, DATA, headers = []):
+    if headers:
+        with open(PATH, 'a+') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = headers)
+            writer.st.pywriteheader()
+
+    with open(PATH, 'a+') as csvfile:
+        rowwriter = csv.writer(csvfile, delimiter=',')
+        for result in DATA:
+            rowwriter.writerow(result)
+
+
 def string_parser(test_string):
     preprocessed = []
     if test_string[:2] == '""':
