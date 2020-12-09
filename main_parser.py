@@ -107,8 +107,9 @@ def parsing_func(URL:str) -> pd.DataFrame():
         my_df = my_df.append(my_dict, ignore_index=True)
     return(my_df)
 
+sheet = 'контракты'
 
-def parse_n_save(key: str) -> None:
+def parse_n_save(key: str, sheet:str=sheet) -> None:
     URLS = proj_dict.get(key)
     name = key+'.xlsx'
     print('Working on {}'.format(key))
@@ -126,14 +127,14 @@ def parse_n_save(key: str) -> None:
         
         print(f"{len(main_df)} records added")
         main_df.reset_index(inplace=True)
-        main_df.to_excel(name)
+        main_df.to_excel(name, sheet_name=sheet)
         
         
     else:
         main_df = parsing_func(URLS[0])
         print(f"{len(main_df)} records added")    
 
-        main_df.to_excel(name)
+        main_df.to_excel(name, sheet_name=sheet)
         
 for key in proj_dict.keys():
     parse_n_save(key)
