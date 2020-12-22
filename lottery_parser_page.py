@@ -11,9 +11,18 @@ pattern = re.compile(r'\d{2}\s*\s\d{4}\s\w\d{2}:\d{2}')
 
 top_3_data = pd.DataFrame(columns=['date', 'num1', 'num2', 'num3'])
 
-def data_converter(my_data:str) -> datetime.date:
-    my_data = my_data.replace(':', ' ')
-    my_data = my_data.split()
+
+def data_converter(my_data:str) -> datetime:
+    raw_date = my_data.split()
+
+    date = '{} {} {} {} {}'.format(raw_date[4],
+                               raw_date[5],
+                               raw_date[6],
+                               raw_date[8][:2],
+                               raw_date[8][3:])
+    
+    my_date = date.split()
+    
     month_list = {'ноября': '11',
                   'декабря': '12',
                   'января': '01',
@@ -26,11 +35,12 @@ def data_converter(my_data:str) -> datetime.date:
                   'августа': '08',
                   'сентября': '09',
                   'октября': '10'}
-    str_date = list([int(my_data[2]),
-                     int(month_list.get(my_data[1])),
-                     int(my_data[0]),
-                     int(my_data[4]),
-                     int(my_data[5]),])
+    str_date = list([
+        int(my_date[2]),
+        int(month_list.get(my_date[1])),
+        int(my_date[0]),
+        int(my_date[3]),
+        int(my_date[4]),])
                  
     str_date = datetime(str_date[0], str_date[1], str_date[2],
                         str_date[3], str_date[4])
@@ -41,7 +51,7 @@ def simple_extractor(URL: str) -> dict:
     html_content = requests.get(URL).text
     bsObj = BeautifulSoup(html_content, 'html.parser')
     for header in bsObj.find_all('h1'):
-        date = re.findall(pattern, str(header.text))
+        date = header.text
         print(date)
     
     num = bsObj.findAll('li', {'class':['number0',
@@ -64,7 +74,8 @@ def simple_extractor(URL: str) -> dict:
     return(data_dict)
 
 
-for x in range(1, 100):
+for x in range(1, 175047):
+
     if x % 1748 == 0:
         print(f'{round(x / 174815 * 100, 1)} done!')
     url = URL+str(x)
